@@ -41,7 +41,7 @@ jobs:
             --cov-report html:test-results/coverage/cov.html \
             --cov-report xml:test-results/coverage/coverage.xml \
             --cov-report annotate:test-results/coverage/cov_annotate \
-            --cov tests
+            --cov .
       - name: Generate Report
         if: success() || failure()        # run this step even if previous step failed
         run: |
