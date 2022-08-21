@@ -1,0 +1,60 @@
+# This is a basic workflow to help you get started with Actions
+name: CI
+
+# Controls when the action will run. Triggers the workflow on push or pull
+# request events but only for the master branch
+on: [push]
+
+# A workflow run is made up of one or more jobs that can run sequentially or
+# in parallel
+jobs:
+  container-jobs:
+    runs-on: self-hosted
+    strategy:
+      matrix:
+        python-version: ["3.7", "3.8", "3.9", "3.10"]
+
+    # Steps represent a sequence of tasks that will be executed as part
+    # of the job
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install flake8 pytest pytest-cov pycobertura
+          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+      - name: Lint with flake8
+        run: |
+          # stop the build if there are Python syntax errors or undefined names
+          flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
+          # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
+          flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+      - name: Test with pytest
+        run: |
+          pytest --doctest-modules \
+            --junitxml=test-results/test-results-${{ matrix.python-version }}.xml \
+            --cov-report html:test-results/coverage/cov.html \
+            --cov-report xml:test-results/coverage/coverage.xml \
+            --cov-report annotate:test-results/coverage/cov_annotate 
+      - name: Generate Report
+        run: |
+          pycobertura show --format html --output coverage.html test-results/coverage/coverage.xml
+      # - name: Run unit tests
+      #   run: |
+      #     pytest -p no:warnings -rA -s --odoo-database=db_test \
+      #       --junitxml="${GITHUB_WORKSPACE}/coverage/junit.xml" \
+      #       --cov-report html:"${GITHUB_WORKSPACE}/coverage/cov.html" \
+      #       --cov-report xml:"${GITHUB_WORKSPACE}/coverage/coverage.xml" \
+      #       --cov-report annotate:"${GITHUB_WORKSPACE}/coverage/cov_annotate" \
+      #       --cov="${GITHUB_WORKSPACE}/monema/albofornitori/" \
+      #       "${GITHUB_WORKSPACE}/monema/albofornitori/"
+      # - uses: actions/upload-artifact@v2  # upload test results
+      #   if: success() || failure()        # run this step even if previous step failed
+      #   with:
+      #     name: test-results
+      #     path: "/__w/albo_fornitori/albo_fornitori/coverage"
