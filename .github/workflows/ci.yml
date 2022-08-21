@@ -43,6 +43,7 @@ jobs:
             --cov-report annotate:test-results/coverage/cov_annotate \
             --cov tests
       - name: Generate Report
+        if: success() || failure()        # run this step even if previous step failed
         run: |
           pycobertura show --format html --output test-results/coverage/coverage.html test-results/coverage/coverage.xml
       # - name: Run unit tests
