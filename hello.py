@@ -11,3 +11,6 @@ def add(x):
 
 def subtract(x):
     return x - 1
+
+def multiply(x, y):
+    return x*y
