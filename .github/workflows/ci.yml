@@ -44,7 +44,7 @@ jobs:
             --cov tests
       - name: Generate Report
         run: |
-          pycobertura show --format html --output coverage.html test-results/coverage/coverage.xml
+          pycobertura show --format html --output test-results/coverage/coverage.html test-results/coverage/coverage.xml
       # - name: Run unit tests
       #   run: |
       #     pytest -p no:warnings -rA -s --odoo-database=db_test \
@@ -54,8 +54,8 @@ jobs:
       #       --cov-report annotate:"${GITHUB_WORKSPACE}/coverage/cov_annotate" \
       #       --cov="${GITHUB_WORKSPACE}/monema/albofornitori/" \
       #       "${GITHUB_WORKSPACE}/monema/albofornitori/"
-      # - uses: actions/upload-artifact@v2  # upload test results
-      #   if: success() || failure()        # run this step even if previous step failed
-      #   with:
-      #     name: test-results
-      #     path: "/__w/albo_fornitori/albo_fornitori/coverage"
+      - uses: actions/upload-artifact@v2  # upload test results
+        if: success() || failure()        # run this step even if previous step failed
+        with:
+          name: test-results
+          path: "test-results"
