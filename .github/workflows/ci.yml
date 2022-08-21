@@ -40,7 +40,7 @@ jobs:
             --junitxml=test-results/test-results-${{ matrix.python-version }}.xml \
             --cov-report html:test-results/coverage/cov.html \
             --cov-report xml:test-results/coverage/coverage.xml \
-            --cov-report annotate:test-results/coverage/cov_annotate 
+            --cov-report annotate:test-results/coverage/cov_annotate \
             --cov tests
       - name: Generate Report
         run: |
