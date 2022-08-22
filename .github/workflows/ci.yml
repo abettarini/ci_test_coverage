@@ -42,7 +42,9 @@ jobs:
             --title='PYTEST REPORT ${{ matrix.python-version }}' \
             --cov-report html:test-results/coverage/cov.html \
             --cov-report xml:coverage.xml \
+            --cov-fail-under=50 \
             --cov-report annotate:test-results/coverage/cov_annotate \
+            --cov-branch \
             --cov .
       - name: Generate Report
         if: success() || failure()        # run this step even if previous step failed
