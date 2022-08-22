@@ -26,7 +26,7 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install flake8 pytest pytest-cov pycobertura
+          pip install flake8 pytest pytest-cov pycobertura pytest-html-reporter
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
       - name: Lint with flake8
         run: |
@@ -38,6 +38,8 @@ jobs:
         run: |
           pytest --doctest-modules \
             --junitxml=test-results/test-results-${{ matrix.python-version }}.xml \
+            --html-report=results/coverage/report.html \
+            --title='PYTEST REPORT ${{ matrix.python-version }}' \
             --cov-report html:test-results/coverage/cov.html \
             --cov-report xml:coverage.xml \
             --cov-report annotate:test-results/coverage/cov_annotate \
