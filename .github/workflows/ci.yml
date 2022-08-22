@@ -38,7 +38,7 @@ jobs:
         run: |
           pytest --doctest-modules \
             --junitxml=test-results/test-results-${{ matrix.python-version }}.xml \
-            --html-report=results/coverage/report.html \
+            --html-report=/reports/index.html \
             --title='PYTEST REPORT ${{ matrix.python-version }}' \
             --cov-report html:test-results/coverage/cov.html \
             --cov-report xml:coverage.xml \
@@ -60,7 +60,7 @@ jobs:
       - uses: actions/upload-artifact@v2  # upload test results
         if: success() || failure()        # run this step even if previous step failed
         with:
-          name: test-results
+          name: /reports
           path: "."
       - name: Deploy to Netlify
         uses: nwtgck/actions-netlify@v1.2
