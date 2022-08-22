@@ -17,4 +17,4 @@ def teardown_function(function):
 
 def test_hello_helloworld():
     hw = helloworld()
-    assert hw == "Hello World"
+    assert hw == "Hello World!"
