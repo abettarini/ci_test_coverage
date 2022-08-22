@@ -15,5 +15,8 @@ def subtract(x):
 def multiply(x, y):
     return x*y
 
-def helloworld():
-    return "Hello World!"
+def helloworld(branch):
+    if branch:
+        return "Hello World!"
+    else:
+        return "Not Hello World!"
