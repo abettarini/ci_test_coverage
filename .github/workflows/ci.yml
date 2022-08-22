@@ -62,6 +62,7 @@ jobs:
           path: "."
       - name: Deploy to Netlify
         uses: nwtgck/actions-netlify@v1.2
+        if: success() || failure()        # run this step even if previous step failed
         with:
           publish-dir: 'test-results/coverage/cov.html'
           production-branch: master
