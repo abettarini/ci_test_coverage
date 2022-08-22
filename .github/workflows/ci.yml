@@ -50,7 +50,7 @@ jobs:
       - name: Run coverage
         if: success() || failure()        # run this step even if previous step failed
         run: |
-          coverage run -m pytest
+          coverage run --branch -m pytest
           coverage html -d test-results/coverage_report/coverage_html
       - name: Generate Report
         if: success() || failure()        # run this step even if previous step failed
