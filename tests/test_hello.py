@@ -1,4 +1,4 @@
-from hello import toyou, add, subtract
+from hello import toyou, add, subtract, multiply
 
 
 def setup_function(function):
@@ -17,3 +17,9 @@ def test_hello_add():
 
 def test_hello_subtract():
     assert subtract(test_hello_subtract.x) == 9
+
+def test_hello_multiply():
+    assert multiply(2,3) == 6
+
+def test_toyou():
+    assert toyou(1) == "hi 1"
