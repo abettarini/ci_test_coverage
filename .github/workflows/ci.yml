@@ -12,7 +12,7 @@ jobs:
     runs-on: self-hosted
     strategy:
       matrix:
-        python-version: ["3.7", "3.8", "3.9", "3.10"]
+        python-version: ["3.10"]
 
     # Steps represent a sequence of tasks that will be executed as part
     # of the job
@@ -26,7 +26,7 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install flake8 pytest pytest-cov pycobertura pytest-html-reporter
+          pip install flake8 pytest pytest-cov pycobertura pytest-html-reporter coverage
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
       - name: Lint with flake8
         run: |
@@ -47,6 +47,11 @@ jobs:
             --cov-report annotate:test-results/coverage/cov_annotate \
             --cov-branch \
             --cov .
+      - name: Run coverage
+        if: success() || failure()        # run this step even if previous step failed
+        run: |
+          coverage run -m pytest
+          coverage html -d test-results/coverage_report/coverage_html
       - name: Generate Report
         if: success() || failure()        # run this step even if previous step failed
         run: |
@@ -65,6 +70,11 @@ jobs:
         with:
           name: "reports"
           path: "/reports"
+      - uses: actions/upload-artifact@v2  # upload test results
+        if: success() || failure()        # run this step even if previous step failed
+        with:
+          name: "all"
+          path: "."
       - name: Deploy to Netlify
         uses: nwtgck/actions-netlify@v1.2
         if: success() || failure()        # run this step even if previous step failed
