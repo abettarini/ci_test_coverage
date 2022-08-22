@@ -4,7 +4,6 @@ from hello import toyou, add, subtract, multiply
 def setup_function(function):
     print(f" Running Setup: {function.__name__}")
     function.x = 10
-    function.branch = True
 
 
 def teardown_function(function):
