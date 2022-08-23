@@ -75,6 +75,8 @@ jobs:
         with:
           name: "all"
           path: "."
+    # Sets the branch name as environment variable
+      - uses: nelonoel/branch-name@v1.0.1
       - name: Deploy to Netlify
         uses: nwtgck/actions-netlify@v1.2
         if: success() || failure()        # run this step even if previous step failed
@@ -99,4 +101,4 @@ jobs:
           authToken: ${{ secrets.GITHUB_TOKEN }}
           context: Netlify preview
           state: success
-          target_url: https://${{ env.BRANCH }}--cobertura-test.netlify.app
+          target_url: https://${{ env.BRANCH_NAME }}--cobertura-test.netlify.app
