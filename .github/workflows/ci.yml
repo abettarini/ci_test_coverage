@@ -75,7 +75,7 @@ jobs:
         with:
           name: "all"
           path: "."
-    # Sets the branch name as environment variable
+      # Sets the branch name as environment variable env.BRANCH_NAME
       - uses: nelonoel/branch-name@v1.0.1
       - name: Deploy to Netlify
         uses: nwtgck/actions-netlify@v1.2
@@ -94,11 +94,3 @@ jobs:
           NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
         timeout-minutes: 1
 
-        # Creates a status check with link to preview
-      - name: Status check
-        uses: Sibz/github-status-action@v1.1.1
-        with:
-          authToken: ${{ secrets.GITHUB_TOKEN }}
-          context: Netlify preview
-          state: success
-          target_url: https://${{ env.BRANCH_NAME }}--cobertura-test.netlify.app
