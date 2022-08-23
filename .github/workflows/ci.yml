@@ -99,4 +99,4 @@ jobs:
           authToken: ${{ secrets.GITHUB_TOKEN }}
           context: Netlify preview
           state: success
-          target_url: https://${{ env.BRANCH_NAME }}--cobertura-test.netlify.app
+          target_url: https://${{ env.BRANCH }}--cobertura-test.netlify.app
